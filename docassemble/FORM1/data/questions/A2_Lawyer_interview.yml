@@ -1,0 +1,133 @@
+---
+features:
+  progress bar: True
+---
+mandatory: True
+question: Supreme Court of South Australia - Civil Jurisdiction - FORM 1
+subquestion: |
+  #### Welcome, 
+  
+  If you are **NOT** a legal representative, please click [here].
+
+  [here]:${ interview_url(i='docassemble.form1:data/questions/A3_Client_interview.yml') }
+
+ 
+buttons: 
+ - "Continue": continue
+ - "Leave this page": exit
+---
+#final page results 
+mandatory: True
+question: Supreme Court of South Australia - Civil Jurisdiction
+subquestion: |
+  #### Supreme Court Form 1 Results
+  
+  Question|Answer 
+  -------|-------
+  Your Name|${ Lfirstname + ' ' + Llastname }
+  Legal matter|${ AMatter }
+  Client's name|${ Asalutation + ' ' + Afirstname + ' ' + Amiddlename + ' ' + Alastname }
+  Client's legal position|${ Aposition } 
+  Client's Phone Number|${ APhone }
+  Client's Fax Number|${ AFax } 
+  Client's Email Address|${ AEmail }
+  Client's Address|${ ANumber + ' ' + AStreet + ' ' + ASuburb + ' ' + APost + ' ' + AState } 
+  Opposing party's name|${ Bsalutation + ' ' + Bfirstname + ' ' + Bmiddlename + ' ' + Blastname }
+  Opposing party's legal position|${ Bposition } 
+  Date completed|${ format_datetime(today(), format='d MMMM yyyy hh:mm') }
+
+ 
+  
+attachment:
+  docx template file: Form_1_-_Lawyer.docx
+  valid formats: pdf
+---
+question: |
+  What is the legal matter?
+field: AMatter
+choices: 
+  - Memorandum 
+  - Summons
+  - Counterclaim 
+  - Third Party Action  
+  - Statement of Claim 
+  - Statement of Facts 
+  - Interlocutory application 
+  - Affidavit 
+  - Subpoena 
+  - Formal Offer 
+  - Freezing Order 
+  - Notice of Appeal 
+
+--- 
+question: Your name
+fields:
+  - First Name: Lfirstname
+  - Last Name: Llastname
+---
+question: Your client's full name
+fields:
+  - Salutation: Asalutation
+    choices:
+      - Dr
+      - Mr
+      - Mrs
+      - Ms
+  - First Name: Afirstname
+  - Middle name: Amiddlename
+    required: False
+  - Last Name: Alastname
+---
+question: Your client's contact details
+fields:
+  - Phone number: APhone
+  - Fax number: AFax
+    required: False
+  - Email Address: AEmail
+    required: False
+---
+question: What is your client's legal position?
+fields:
+  - Position: Aposition
+    choices:
+      - Plaintiff
+      - Appellant
+      - Applicant
+      - Defendant 
+      - Respondant 
+---
+question: Your client's place of residence  
+fields:
+  - Unit/street number: ANumber
+  - Street: AStreet
+  - Suburb/City: ASuburb
+  - Postcode: APost
+  - State: AState
+    choices:
+      - South Australia
+      - Queensland
+      - New South Wales
+      - Victoria
+      - Western Australia
+      - Tasmania
+---
+question: Details of the opposing party 
+fields:
+  - Salutation: Bsalutation
+    choices:
+      - Dr
+      - Mr
+      - Mrs
+      - Ms
+  - First Name: Bfirstname
+  - Middle name: Bmiddlename
+    required: False
+  - Last Name: Blastname
+  - Legal Position: Bposition
+    choices:
+      - Plaintiff
+      - Appellant
+      - Applicant
+      - Defendant 
+      - Respondent  
+--- 

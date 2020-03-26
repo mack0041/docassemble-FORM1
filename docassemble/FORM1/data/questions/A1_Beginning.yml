@@ -1,0 +1,80 @@
+---
+objects:
+  - endpoint: DADict
+---
+#PART 1 - Welcoming to the service. 
+#Includes Disclaimer
+mandatory: True
+question: Supreme Court of South Australia - Civil Jurisdiction - FORM 1 
+subquestion: |
+  ###Welcome to this service.
+  This application assists in completing a Supreme Court Form 1 document.
+
+  #####**DISCLAIMER** 
+  
+   It is strongly advised that upon completion, this form is checked by a legal representative before submitted to the Court. 
+   
+   Please note that the filing of this document, is required to serve all other parties in accordance with the Rules of the Supreme Court. 
+ 
+   Any false or misleading statements made, may deem your form invalid and may delay the progression of your matter. 
+
+  By continuing, you understand and accept these rules.
+
+
+buttons:
+  - Exit: exit
+    url: https://courts.sa.gov.au
+  - Continue: continue
+---
+mandatory: True
+code: |
+  if target_variable == 'Supreme Court':
+   endpoint['run_form']
+  else:
+    endpoint['decline_form']
+    
+---    
+    #PART 2
+mandatory: True
+question: |
+  Which court are you completing this document for?
+field: target_variable
+choices:
+  - Supreme Court
+  - Magistrates Court
+  - District Court
+  - Federal Circuit Court 
+  - Federal Court
+  - Other
+
+---    
+    
+#Ineligible for the from ENDPOINT
+event: endpoint['decline_form']
+question: Oops!
+subquestion: |
+  This application is only for completing a *South Australia Supreme Court* Form 1 document. 
+  
+  Please visit [courts.sa.gov.au](http://www.courts.sa.gov.au/Pages/default.aspx) for more information concerning other court forms and procedures.
+  
+  
+  Thank you.
+
+back button: True
+back button label: |
+  Wait, go back
+  
+buttons:
+  - Exit: exit
+   
+---
+#eligible for the form ENDPOINT
+event: endpoint['run_form']
+question: |
+  Are you filing this document as:
+subquestion: |
+  * [a Lawyer on behalf of your client?]
+  * [an independant client on behalf of yourself?]
+
+  [a Lawyer on behalf of your client?]: ${ interview_url(i='docassemble.form1:data/questions/ALawyer_interview.yml') }
+  [an independant client on behalf of yourself?]: ${ interview_url(i='docassemble.form1:data/questions/AClient_interview.yml') }
